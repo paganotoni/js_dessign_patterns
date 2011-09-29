@@ -17,7 +17,7 @@ var car = function(){
   }
 }
 
-var bicycle = function(){
+var bus = function(){
   return {
     passengers: 20, 
     size_in_m2: 30,
@@ -25,6 +25,13 @@ var bicycle = function(){
   }
 }
 
-// TODO: implement factory
 
+
+var mean_factory = (function(){
+  return{
+    build_mean: function(){
+      //TODO: Implement factory.           
+    }
+  }
+})()
 
