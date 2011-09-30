@@ -1,37 +1,34 @@
 
 
 
-var bicycle = function(){
+var mean = function( people, val, name ){
   return {
-    passengers: 1, 
-    size_in_m2: 2,
-    value_in_dollars: 200
+    passengers: people,
+    value: val, 
+    identify: function(){
+      console.info( "It's a " + name );
+    }
   }
 }
-
-var car = function(){
-  return {
-    passengers: 5, 
-    size_in_m2: 8,
-    value_in_dollars: 3000
-  }
-}
-
-var bus = function(){
-  return {
-    passengers: 20, 
-    size_in_m2: 30,
-    value_in_dollars: 20000
-  }
-}
-
 
 
 var mean_factory = (function(){
+
   return{
-    build_mean: function(){
-      //TODO: Implement factory.           
+    build_mean: function( passengers, value ){
+      // This could be a more complex job
+      // related to instances creation.
+      if( passengers <= 1 && value <= 200 ){
+        return new mean( passengers, value, "Bicicle" );
+      }else if( passengers <= 5 && value <= 3000 ){
+        return new mean( passengers, value, "Car" )
+      }else{
+        return new mean( passengers, value, "Bus");
+      }
     }
   }
 })()
+
+console.info( mean_Factory.build_mean( 1, 100 ).identify( ) );
+
 

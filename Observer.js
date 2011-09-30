@@ -1,15 +1,6 @@
-var queue = function(){
+
+var central = (function(){
   var topics = {};
-
-  // Some identity generator
-  var token_generator = function(){
-    var S4 = function() {
-      return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    }
-
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-  };
-
 
   return {
     publish: function( topic, args ){
@@ -20,7 +11,7 @@ var queue = function(){
       subscribers = topics[topic];
       // Pass Message to subscriptors
       for( var i = 0; i < subscribers.length; i++ ){
-        subscribers[i].func( topic, args  ); 
+        subscribers[i].func( args  ); 
       }
             
     },
@@ -30,25 +21,29 @@ var queue = function(){
         topics[topic] = []
       }
 
-      var token = token_generator();
-
       topics[topic].push({
-        token: token,
         func: func
       });
- 
-      return token;
+
     }
   }
 
+})()
+
+var functionOne = function( data ){
+  console.info( "Data : "+ data );
+  console.info( "Function One" );
 }
 
-var central = new queue(); 
+central.subscribe( "topicOne", functionOne );
 
-var testSubscriber = function( topic , data ){
-  console.info( topics + ": " + data );
+var functionTwo = function( data ){
+  console.info( "Data : "+ data );
+  console.info( "Function Two");
 }
 
-queue.subscribe("topicOne", testSubscriber );
-queue.publish( "topicOne", "Hey!" );
+central.subscribe( "topicOne", functionOne );
+central.subscribe( "topicTwo", functionOne );
+
+central.publish( "topicOne", "Hey!" );
 
