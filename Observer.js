@@ -1,5 +1,5 @@
 
-var central = (function(){
+var spreadsheet = (function(){
   var topics = {};
 
   return {
@@ -30,20 +30,16 @@ var central = (function(){
 
 })()
 
-var functionOne = function( data ){
-  console.info( "Data : "+ data );
-  console.info( "Function One" );
+var formula = function( data ){
+  console.info( "Formula will be recalculed based on:" + data );
 }
 
-central.subscribe( "topicOne", functionOne );
-
-var functionTwo = function( data ){
-  console.info( "Data : "+ data );
-  console.info( "Function Two");
+var graphics = function( data ){
+  console.info( "graplhics are coing to be repainted based on: " + data )
 }
 
-central.subscribe( "topicOne", functionOne );
-central.subscribe( "topicTwo", functionOne );
+spreadsheet.subscribe( "valueChange", formula );
+spreadsheet.subscribe( "valueChange", graphics );
 
-central.publish( "topicOne", "Hey!" );
+spreadsheet.publish( "valueChange", "(this could be real data for procesing)");
 
